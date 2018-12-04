@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, FlatList, StatusBar, Platform } from 'react-nat
 import { View } from 'native-base';
 import { ReactiveList } from '@appbaseio/reactivesearch-native';
 
-import Utils from '../utils';
+import Utils from '../utils/index';
 import CONSTANTS from '../constants';
 import COLORS from '../constants/Colors';
 import Header from '../components/Header';
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 });
 
 const propTypes = {
-  screen: PropTypes.oneOf([CONSTANTS.ALL, CONSTANTS.ACTIVE, CONSTANTS.COMPLETED]).isRequired,
+  screen: PropTypes.oneOf([CONSTANTS.ALL, CONSTANTS.ACTIVE, CONSTANTS.COMPLETED, CONSTANTS.STARRED]).isRequired,
 };
 
 export default class TodosContainer extends React.Component {
@@ -51,7 +51,7 @@ export default class TodosContainer extends React.Component {
         data={filteredData}
         keyExtractor={item => item._id}
         renderItem={({ item: todo }) => (
-          <TodoItem todo={todo} onUpdate={this.api.update} onDelete={this.api.destroy} />
+          <TodoItem todo={todo} onUpdate={this.api.update} onDelete={this.api.destroy} onStar = {this.api.star}/>
         )}
       />
     );
@@ -67,6 +67,8 @@ export default class TodosContainer extends React.Component {
         return todosData.filter(todo => !todo.completed);
       case CONSTANTS.COMPLETED:
         return todosData.filter(todo => todo.completed);
+      case CONSTANTS.STARRED:
+        return todosData.filter(todo => todo.starred);
     }
 
     return todosData;

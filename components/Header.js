@@ -17,7 +17,7 @@ const AppHeader = () => (
           paddingLeft: 7,
         }}
       >
-        Reactive Todos
+        The Best To Do App Of All Time
       </Title>
     </Body>
   </Header>

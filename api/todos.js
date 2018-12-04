@@ -19,6 +19,7 @@ class TodoModel {
     const body = {
       title: todo.title,
       completed: todo.completed,
+      starred: todo.starred,
       createdAt: Date.now(),
     };
 
@@ -34,7 +35,6 @@ class TodoModel {
         console.error('@api - add', error);
       });
   }
-
   update = (editedTodo) => {
     const { _id, touched, ...todo } = editedTodo;
 
@@ -46,6 +46,27 @@ class TodoModel {
           doc: {
             title: todo.title,
             completed: todo.completed,
+          },
+        },
+      })
+      .on('data', (response) => {
+        console.log('@api - update', response);
+      })
+      .on('error', (error) => {
+        console.error('@api - update', error);
+      });
+  };
+  star = (editedTodo) => {
+    const { _id, touched, ...todo } = editedTodo;
+
+    this.appbaseRef
+      .update({
+        type: CONFIG.type,
+        id: _id,
+        body: {
+          doc: {
+            title: todo.title,
+            starred : todo.starred,
           },
         },
       })

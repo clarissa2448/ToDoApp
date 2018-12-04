@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { View, CheckBox, Body } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
+import COLORS from '../constants/Colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,10 +26,12 @@ const propTypes = {
   todo: PropTypes.shape({
     title: PropTypes.string,
     completed: PropTypes.bool,
+    starred: PropTypes.bool,
     createdAt: PropTypes.number,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onStar: PropTypes.func.isRequired,
 };
 
 class TodoItem extends Component {
@@ -36,11 +39,12 @@ class TodoItem extends Component {
     propAction({
       ...todo,
       completed: !todo.completed,
+      starred: !todo.starred,
     });
   };
 
   render() {
-    const { todo, onUpdate, onDelete } = this.props;
+    const { todo, onStar, onUpdate, onDelete } = this.props;
 
     return (
       <View style={styles.row}>
@@ -83,6 +87,16 @@ class TodoItem extends Component {
                 {todo.title}
               </Text>
             </Body>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.onTodoItemToggle(todo, onStar)}
+            style={{ paddingLeft: 25, paddingRight: 15 }}
+          >
+            <Ionicons
+              name = {todo.starred ? "ios-star": "ios-star-outline"}
+              color= {COLORS.shadeIn}
+              size={23}
+            />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => onDelete(todo)}

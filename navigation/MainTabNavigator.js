@@ -6,6 +6,7 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 import Colors from '../constants/Colors';
 import CONSTANTS from '../constants';
 import TodosScreen from '../screens/TodosScreen';
+import HomeScreen from '../screens/HomeScreen';
 
 const commonNavigationOptions = ({ navigation }) => ({
   header: null,
@@ -16,12 +17,18 @@ const routeOptions = {
   screen: TodosScreen,
   navigationOptions: commonNavigationOptions,
 };
+const routeOptions2 = {
+  screen: HomeScreen,
+  navigationOptions: commonNavigationOptions,
+};
 
 const TabNav = TabNavigator(
   {
+    [CONSTANTS.NONE]: routeOptions2,
     [CONSTANTS.ALL]: routeOptions,
     [CONSTANTS.ACTIVE]: routeOptions,
     [CONSTANTS.COMPLETED]: routeOptions,
+    [CONSTANTS.STARRED]: routeOptions,
   },
   {
     navigationOptions: ({ navigation }) => ({
@@ -32,11 +39,20 @@ const TabNav = TabNavigator(
           case CONSTANTS.ALL:
             iconName = 'format-list-bulleted';
             break;
+          case CONSTANTS.STARRED:
+            iconName = 'star-border';
+            break;
           case CONSTANTS.ACTIVE:
             iconName = 'filter-center-focus';
             break;
           case CONSTANTS.COMPLETED:
             iconName = 'playlist-add-check';
+            break;
+          default:
+            iconName = 'home';
+            break;
+
+
         }
         return (
           <MaterialIcons
