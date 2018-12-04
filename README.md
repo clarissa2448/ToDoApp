@@ -1,10 +1,6 @@
-# Reactive Todos
+To Do App
 
-A shared todos list built with ReactiveSearch Native
+API Used: Reactive Search
+Five Screens: Home, All, Active, Completed, Starred
+Users are able to add to do items, complete them, delete them, or star important ones
 
-Built with
-
-* [React](https://reactjs.org/)
-* [ReactiveSearch for Native](https://github.com/appbaseio/reactivesearch/tree/dev/packages/native)
-* [Appbaseio](https://appbase.io)
-* ❤
